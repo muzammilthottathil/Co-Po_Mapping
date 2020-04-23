@@ -1,39 +1,18 @@
 const express = require('express');
-const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
-const db = require('./mysqlConnention');
+
+const { getLoginPage, loginFaculty, getFacultyProfile } = require('./routes/faculty');
+const { addAdmin } = require('./routes/admin');
+
+require('dotenv').config();
 
 const { getHomePage } = require('./routes/index');
 
 require('dotenv').config();
 
-const TWO_HOURS = 1000 * 60 * 60 * 2;
-
-const {
-    PORT = process.env.PORT,
-    NODE_ENV = 'development',
-
-    SESS_NAME = 'sid',
-    SESS_SECRET = 'fosslab',
-    SESS_LIFETIME = TWO_HOURS
-} = process.env;
-
-const IN_PROD = NODE_ENV === 'production';
-
 const app = express();
 
-app.use(session({
-    name : SESS_NAME,
-    resave : false,
-    saveUninitialized : false,
-    secret : SESS_SECRET,
-    cookie : {
-        maxAge : SESS_LIFETIME,
-        sameSite : true,
-        secure : IN_PROD
-    }
-}))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended : true }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -43,10 +22,17 @@ app.set('view engine', 'ejs');
 
 app.get('/', getHomePage);
 
-app.listen(PORT, (err) => {
+app.get('/login', getLoginPage);
+app.post('/login', loginFaculty);
+
+app.get('/faculty/:id', getFacultyProfile);
+
+app.post('/admin/add', addAdmin);
+
+app.listen(process.env.PORT, (err) => {
     if(!err) {
         console.log('Server is running...');
-        console.log('Listening to port ' + PORT);
+        console.log('Listening to port ' + process.env.PORT);
     } else {
         console.log(err);
     }

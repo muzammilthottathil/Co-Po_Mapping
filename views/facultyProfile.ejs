@@ -1,0 +1,15 @@
+<%- include('partials/header.ejs') -%>
+<body>
+    <div>
+        <h2><%= faculty.faculty_name %></h2>
+        <div>
+            <ul>
+                <li>Email : <%= faculty.faculty_email %></li>
+                <li>Department : <%= department %></li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <a href="/logout"><button>Log Out</button></a>
+    </div>
+</body>

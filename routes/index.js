@@ -1,5 +1,7 @@
 module.exports = {
     getHomePage : (req, res) => {
-        res.send("Home Page");
+        res.render('index.ejs', {
+            title : 'College of Engineering Trivandrum'
+        });
     }
 }
