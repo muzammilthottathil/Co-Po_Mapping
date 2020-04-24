@@ -20,6 +20,7 @@ module.exports = {
             // console.log(decoded);
             // console.log(req.params);
             if(decoded.facultyId == req.params.id) {
+                req.body.facultyId = decoded.facultyId;
                 next();
                 return;
             } else {
@@ -66,6 +67,8 @@ module.exports = {
 
             // console.log(user.admin);
             if(user.admin) {
+                req.body.adminId = user.facultyId;
+                // console.log(req.body.adminId);
                 next();
                 return;
             } else {

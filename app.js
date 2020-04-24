@@ -6,6 +6,7 @@ const cors = require('cors');
 
 const { getLoginPage, loginFaculty, getFacultyProfile, logoutFaculty } = require('./routes/faculty');
 const { addAdmin, addFaculty, getFacultyAddPage } = require('./routes/admin');
+const { getAddCoursePage, addCourse } = require('./routes/course');
 const { verifyFaculty, ifLoggedIn, verifyAdmin } = require('./routes/middleware');
 
 require('dotenv').config();
@@ -33,7 +34,10 @@ app.post('/login', ifLoggedIn, loginFaculty);
 app.get('/faculty/:id', verifyFaculty, getFacultyProfile);
 
 app.get('/addfaculty', verifyAdmin, getFacultyAddPage);
-app.post('/addfaculty', addFaculty);
+app.post('/addfaculty', verifyAdmin, addFaculty);
+
+app.get('/addcourse', getAddCoursePage);
+app.post('/addcourse', verifyAdmin, addCourse);
 
 app.post('/admin/add', addAdmin);
 
