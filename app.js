@@ -1,9 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
-const { getLoginPage, loginFaculty, getFacultyProfile } = require('./routes/faculty');
+const { getLoginPage, loginFaculty, getFacultyProfile, logoutFaculty } = require('./routes/faculty');
 const { addAdmin } = require('./routes/admin');
+const { verifyFaculty, ifLoggedIn } = require('./routes/middleware');
 
 require('dotenv').config();
 
@@ -13,6 +16,8 @@ require('dotenv').config();
 
 const app = express();
 
+app.use(cookieParser());
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended : true }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -22,12 +27,14 @@ app.set('view engine', 'ejs');
 
 app.get('/', getHomePage);
 
-app.get('/login', getLoginPage);
-app.post('/login', loginFaculty);
+app.get('/login', ifLoggedIn, getLoginPage);
+app.post('/login', ifLoggedIn, loginFaculty);
 
-app.get('/faculty/:id', getFacultyProfile);
+app.get('/faculty/:id', verifyFaculty, getFacultyProfile);
 
 app.post('/admin/add', addAdmin);
+
+app.get('/logout', logoutFaculty);
 
 app.listen(process.env.PORT, (err) => {
     if(!err) {

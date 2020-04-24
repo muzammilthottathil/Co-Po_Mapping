@@ -37,14 +37,14 @@ module.exports = {
                 }
                 
                 if(match) {
-                    jwt.sign({ facultyId : user.faculty_id, deptId : user.dept_id, email : user.faculty_email, admin : user.admin }, process.env.JWT_SECRET_KEY, (err, token) => {
+                    jwt.sign({ facultyId : user.faculty_id, deptId : user.dept_id, admin : user.admin }, process.env.JWT_SECRET_KEY, { expiresIn : "3600s" }, (err, token) => {
                         if(err) {
                             res.status(300).send(err);
                             return;
                         }
 
                         res.cookie('token', token, {
-                            expires: new Date(Date.now() + 1000000000),
+                            expiresIn: "3600s",
                             secure: false, // set to true if your using https
                             httpOnly: true,
                         })
@@ -54,6 +54,7 @@ module.exports = {
                         //     deptId : user.dept_id, 
                         //     email : user.faculty_email
                         // })
+                        console.log('login succesful');
                         res.redirect('/faculty/' + user.faculty_id);
                     })
                 } else {
@@ -96,7 +97,7 @@ module.exports = {
                 }
                 
                 let department = rows[0].dept_name;
-                console.log(department);
+                // console.log(department);
 
                 res.render('facultyProfile.ejs', {
                     title : 'Profile',
@@ -105,5 +106,16 @@ module.exports = {
                 })
             })
         })
+    },
+
+    logoutFaculty : (req, res) => {
+        // console.log(req.cookies.token);
+        // req.cookies.token = null;
+        res.cookie('token', null, {
+            expires: new Date(Date.now() + 1),
+            secure: false, // set to true if your using https
+            httpOnly: true,
+        })
+        res.redirect('/login');
     }
 }
