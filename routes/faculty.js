@@ -48,12 +48,7 @@ module.exports = {
                             secure: false, // set to true if your using https
                             httpOnly: true,
                         })
-
-                        // res.json({
-                        //     facultyId : user.faculty_id, 
-                        //     deptId : user.dept_id, 
-                        //     email : user.faculty_email
-                        // })
+                        
                         console.log('login succesful');
                         res.redirect('/faculty/' + user.faculty_id);
                     })
@@ -119,8 +114,7 @@ module.exports = {
     },
 
     logoutFaculty : (req, res) => {
-        // console.log(req.cookies.token);
-        // req.cookies.token = null;
+
         res.cookie('token', null, {
             expires: new Date(Date.now() + 1),
             secure: false, // set to true if your using https

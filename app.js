@@ -5,8 +5,8 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const { getLoginPage, loginFaculty, getFacultyProfile, logoutFaculty } = require('./routes/faculty');
-const { addAdmin, addFaculty, getFacultyAddPage } = require('./routes/admin');
-const { getAddCoursePage, addCourse } = require('./routes/course');
+const { addAdmin, addFaculty, getFacultyAddPage, assignFaculty, getAddCoursePage, addCourse} = require('./routes/admin');
+const {  getAllCourses, getCourseDetails } = require('./routes/course');
 const { verifyFaculty, ifLoggedIn, verifyAdmin } = require('./routes/middleware');
 
 require('dotenv').config();
@@ -33,11 +33,17 @@ app.post('/login', ifLoggedIn, loginFaculty);
 
 app.get('/faculty/:id', verifyFaculty, getFacultyProfile);
 
-app.get('/addfaculty', verifyAdmin, getFacultyAddPage);
-app.post('/addfaculty', verifyAdmin, addFaculty);
+app.get('/admin/addfaculty', verifyAdmin, getFacultyAddPage);
+app.post('/admin/addfaculty', verifyAdmin, addFaculty);
 
-app.get('/addcourse', getAddCoursePage);
-app.post('/addcourse', verifyAdmin, addCourse);
+app.get('/admin/addcourse', verifyAdmin, getAddCoursePage);
+app.post('/admin/addcourse', verifyAdmin, addCourse);
+
+app.get('/admin/courses', verifyAdmin, getAllCourses);
+app.get('/admin/courses/:coursecode', verifyAdmin, getCourseDetails);
+
+app.get('/admin/courses/:courseid/assignfaculty', assignFaculty);
+
 
 app.post('/admin/add', addAdmin);
 

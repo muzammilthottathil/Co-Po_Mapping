@@ -74,7 +74,7 @@ module.exports = {
             } else {
                 res.status(403).json({
                     message : 'Permission denied',
-                    reason : 'Only admins can add new faculty members'
+                    reason : 'Only admins have the permission for this'
                 })
             }            
         });

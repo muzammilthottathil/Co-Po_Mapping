@@ -1,0 +1,30 @@
+<%- include('partials/header') -%>
+<body>
+    <% if(courses.length === 0) { %>
+        <div>
+            <h3>No courses to display</h3>
+            <p>Click <a href="/faculty/<%= adminId %>">here</a> to go to profile page...</p>
+        </div>
+    <% } else {%>
+        <div>
+            <h2>Courses</h2>
+            <ol>
+                <% courses.forEach((course) => { %>
+                    <li>
+                        <div>
+                            <ul>
+                                <li>Course Code : <%= course.course_code %></li>
+                                <li>Course Name : <%= course.course_name %></li>
+                                <li>Course Outcomes : <%= course.co_no %></li>
+                                <li>Course Code : <%= course.dept_id %></li>
+                                <li>Semester : <%= course.semester %></li>
+                            </ul>
+                            <br>
+                        </div>
+                        <a href="courses/<%= course.course_code %>"><button>Details</button></a>
+                    </li>
+                <% }) %>
+            </ol>
+        </div>
+    <% } %>
+</body>
