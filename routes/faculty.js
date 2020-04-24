@@ -99,11 +99,21 @@ module.exports = {
                 let department = rows[0].dept_name;
                 // console.log(department);
 
-                res.render('facultyProfile.ejs', {
-                    title : 'Profile',
-                    faculty : user,
-                    department : department
-                })
+                if(user.admin) {
+                    res.render('adminProfile.ejs', {
+                        title : 'Profile',
+                        faculty : user,
+                        department : department
+                    });
+                } else {
+                    res.render('facultyProfile.ejs', {
+                        title : 'Profile',
+                        faculty : user,
+                        department : department
+                    });
+                }
+
+
             })
         })
     },

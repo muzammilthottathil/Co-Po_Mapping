@@ -25,10 +25,10 @@ module.exports = {
             } else {
                 res.status(403).json({
                     message : 'Permission denied'
-                })
+                });
             }
     
-        })
+        });
 
     },
 
@@ -47,8 +47,33 @@ module.exports = {
             }
 
             res.redirect('/faculty/' + decoded.facultyId);
-        })
+        });
+    },
 
-        
+    verifyAdmin : (req, res, next) => {
+        let token = req.cookies.token;
+
+        if(token == null) {
+            res.redirect('/login');
+            return;
+        }
+
+        jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
+            if(err) {
+                res.status(403).send(err);
+                return;
+            }
+
+            // console.log(user.admin);
+            if(user.admin) {
+                next();
+                return;
+            } else {
+                res.status(403).json({
+                    message : 'Permission denied',
+                    reason : 'Only admins can add new faculty members'
+                })
+            }            
+        });
     }
 }

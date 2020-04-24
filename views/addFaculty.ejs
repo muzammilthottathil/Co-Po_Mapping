@@ -1,0 +1,31 @@
+<%- include('partials/header.ejs') -%>
+<body>
+    <div>
+        <form action="/addfaculty" method="POST">
+            <div>
+                <label for="facultyName">Name : </label>
+                <input type="text" name="name" id="name" required >
+            </div>
+            <div>
+                <label for="department">Department : </label>
+                <select id="department" name="department">
+                    <option value="1">Computer Science and Engineering</option>
+                    <option value="2">Electronics and Communication</option>
+                    <option value="3">Electrical and Electronics Engineering</option>
+                    <option value="4">Mechanical Engineering</option>
+                    <option value="5">Civil Engineering</option>
+                </select>
+            </div>
+            <div>
+                <label for="email">Email : </label>
+                <input type="email" name="email" id="email" required >
+            </div>
+            <div>
+                <label for="password">Password : </label>
+                <input type="password" name="password" id="password" required >
+            </div>
+            <button type="submit">Add Faculty</button>
+            <button type="reset">Reset</button>
+        </form>
+    </div>
+</body>

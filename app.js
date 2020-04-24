@@ -5,8 +5,8 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const { getLoginPage, loginFaculty, getFacultyProfile, logoutFaculty } = require('./routes/faculty');
-const { addAdmin } = require('./routes/admin');
-const { verifyFaculty, ifLoggedIn } = require('./routes/middleware');
+const { addAdmin, addFaculty, getFacultyAddPage } = require('./routes/admin');
+const { verifyFaculty, ifLoggedIn, verifyAdmin } = require('./routes/middleware');
 
 require('dotenv').config();
 
@@ -31,6 +31,9 @@ app.get('/login', ifLoggedIn, getLoginPage);
 app.post('/login', ifLoggedIn, loginFaculty);
 
 app.get('/faculty/:id', verifyFaculty, getFacultyProfile);
+
+app.get('/addfaculty', verifyAdmin, getFacultyAddPage);
+app.post('/addfaculty', addFaculty);
 
 app.post('/admin/add', addAdmin);
 

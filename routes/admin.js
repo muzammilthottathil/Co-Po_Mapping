@@ -27,5 +27,36 @@ module.exports = {
                 res.redirect('/login');
             })
         })
+    },
+
+    getFacultyAddPage : (req, res) => {
+        res.render('addFaculty.ejs', {
+            title : 'Add Faculty'
+        })
+    },
+
+    addFaculty : (req, res) => {
+        let facultyName = req.body.name;
+        let deptId = req.body.department;
+        let email = req.body.email;
+        let password = req.body.password;
+
+        bcrypt.hash(password, 10, (err, hash) => {
+            if(err) {
+                console.log(err);
+                return;
+            }
+            password = hash;
+
+            let registerUserQuery = `INSERT INTO faculty (faculty_name, dept_id, faculty_email, faculty_password, admin) VALUES(?, ?, ?, ?, ?)`
+            let values = [facultyName, deptId, email, password, false];
+            db.query(registerUserQuery, values, (err, rows, fields) => {
+                if(err) {
+                    res.status(500).send(err);
+                    return;
+                }
+                res.redirect('/login')
+            })
+        })
     }
 }
