@@ -67,6 +67,7 @@ module.exports = {
     },
 
     addCourse : (req, res) => {
+
         let courseCode = req.body.courseCode;
         let courseName = req.body.courseName;
         let numberOfCos = req.body.numberOfCos;
@@ -91,7 +92,73 @@ module.exports = {
         })
     },
 
+    getAssignFacultyPage : (req, res) => {
+
+        let courseCode = req.params.coursecode;
+        let getCourseDetailsQuery = `SELECT * FROM course, department WHERE course_code = "${courseCode}" AND course.dept_id = department.dept_id`;
+        let getFacultiesQuery = `SELECT faculty_id, faculty_name FROM faculty`;
+
+        let faculties = [];
+
+        db.query(getFacultiesQuery, (err, rows, fields) => {
+            if(err) {
+                res.status(300).send(err);
+                return;
+            }
+
+            faculties = rows;
+        })
+
+        db.query(getCourseDetailsQuery, (err, rows, fields) => {
+            if(err) {
+                res.status(303).send(err);
+                return;
+            }
+
+            if(rows.length === 0) {
+                res.json({
+                    message : "Invalid course code"
+                })
+                return;
+            }
+
+            let course = rows[0];
+            res.render('assignFaculty.ejs', {
+                title : 'Assign Faculty',
+                course : course,
+                faculties : faculties
+            })
+        })
+
+        
+    },
+
     assignFaculty : (req, res) => {
-        res.send('Assign faculty page');
+
+        let courseCode = req.params.coursecode;
+        let year = req.body.year;
+        let facultyId = req.body.faculty;
+
+        let addCourseYearQuery = `INSERT IGNORE INTO co_attainment(course_code, year) VALUES (?, ?)`;
+        
+        db.query(addCourseYearQuery, [ courseCode, year ], (err, rows, fields) => {
+            if(err) {
+                res.status(303).send(err);
+                return;
+            }
+
+            let addFacultyQuery = `INSERT IGNORE INTO course_faculty VALUES(?, ?, ?)`;
+            let addFacultyValues = [ courseCode, year, facultyId ];
+
+            db.query(addFacultyQuery, addFacultyValues, (err, rows, fields) => {
+                if(err) {
+                    res.status(303).send(err);
+                    return;
+                }
+
+                res.redirect('/admin/courses/' + courseCode);
+            })
+
+        })
     }
 }

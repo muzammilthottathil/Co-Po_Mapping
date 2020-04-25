@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const { getLoginPage, loginFaculty, getFacultyProfile, logoutFaculty } = require('./routes/faculty');
-const { addAdmin, addFaculty, getFacultyAddPage, assignFaculty, getAddCoursePage, addCourse} = require('./routes/admin');
+const { addAdmin, addFaculty, getFacultyAddPage, assignFaculty, getAddCoursePage, addCourse, getAssignFacultyPage } = require('./routes/admin');
 const {  getAllCourses, getCourseDetails } = require('./routes/course');
 const { verifyFaculty, ifLoggedIn, verifyAdmin } = require('./routes/middleware');
 
@@ -42,7 +42,8 @@ app.post('/admin/addcourse', verifyAdmin, addCourse);
 app.get('/admin/courses', verifyAdmin, getAllCourses);
 app.get('/admin/courses/:coursecode', verifyAdmin, getCourseDetails);
 
-app.get('/admin/courses/:courseid/assignfaculty', assignFaculty);
+app.get('/admin/courses/:coursecode/assignfaculty', getAssignFacultyPage);
+app.post('/admin/courses/:coursecode/assignfaculty', assignFaculty)
 
 
 app.post('/admin/add', addAdmin);

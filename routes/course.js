@@ -2,37 +2,6 @@ const db = require('../mysqlConnention');
 
 module.exports = {
 
-    getAddCoursePage : (req, res) => {
-        res.render('addcourse.ejs', {
-            title : 'Add course'
-        })
-    },
-
-    addCourse : (req, res) => {
-        let courseCode = req.body.courseCode;
-        let courseName = req.body.courseName;
-        let numberOfCos = req.body.numberOfCos;
-        let deptId = req.body.dept;
-        let sem = req.body.semester;
-
-        let addCourseQuery = `INSERT INTO course(course_code, course_name, co_no, dept_id, semester) VALUES (?, ?, ?, ?, ?)`;
-        let values = [courseCode, courseName, numberOfCos, deptId, sem];
-
-        db.query(addCourseQuery, values, (err, rows, fields) => {
-            if(err) {
-                res.status(300).send(err);
-                return;
-            }
-
-            res.send(`
-                <div>
-                    <h1>Course added succesfully</h1>
-                    <p>Go back to <a href="/faculty/${req.body.adminId}">profile page</a></p>
-                </div>
-            `);
-        })
-    },
-
     getAllCourses : (req, res) => {
         let getAllCoursesQuery = `SELECT * FROM course`;
         db.query(getAllCoursesQuery, (err, rows, fields) => {
@@ -48,6 +17,7 @@ module.exports = {
     },
 
     getCourseDetails : (req, res) => {
+
         let courseCode = req.params.coursecode;
         let getCourseDetailsQuery = `SELECT * FROM course WHERE course_code = "${courseCode}"`;
         db.query(getCourseDetailsQuery, (err, rows, fields) => {
