@@ -42,8 +42,8 @@ app.post('/admin/addcourse', verifyAdmin, addCourse);
 app.get('/admin/courses', verifyAdmin, getAllCourses);
 app.get('/admin/courses/:coursecode', verifyAdmin, getCourseDetails);
 
-app.get('/admin/courses/:coursecode/assignfaculty', getAssignFacultyPage);
-app.post('/admin/courses/:coursecode/assignfaculty', assignFaculty)
+app.get('/admin/courses/:coursecode/assignfaculty', verifyAdmin, getAssignFacultyPage);
+app.post('/admin/courses/:coursecode/assignfaculty', verifyAdmin, assignFaculty)
 
 
 app.post('/admin/add', addAdmin);

@@ -5,9 +5,25 @@
         <div>
             <ul>
                 <li>Course Code : <%= course.course_code %></li>
-                <li>Department : <%= deptName %></li>
+                <li>Department : <%= course.dept_name %></li>
                 <li>Semester : <%= course.semester %></li>
             </ul>
+        </div>
+        <br><br>
+        <div>
+            <h3>Assigned Teachers</h3>
+            <ol>
+                 <% faculties.forEach((faculty) => { %>
+                    <li>
+                        <div>
+                            <ul>
+                                <li>Year : <%= faculty.course_year %></li>
+                                <li>Faculty Name : <%= faculty.faculty_name %> </li>
+                            </ul>
+                        </div>
+                    </li>
+                <% }) %>
+            </ol>
         </div>
         <div>
             <a href="<%= course.course_code %>/assignfaculty"><button>Assgin Faculty</button></a>
