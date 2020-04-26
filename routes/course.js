@@ -20,16 +20,24 @@ module.exports = {
 
         let courseCode = req.params.coursecode;
         // let getCourseDetailsQuery = `SELECT * FROM course, department WHERE course_code = "${courseCode}" AND course.dept_id = department.dept_id`;
-        let getCourseDetailsQuery = `SELECT course.course_code, course.course_name, department.dept_name, course.semester
+        let getCourseDetailsQuery = `SELECT course.course_code, course.course_name, department.dept_name, course.semester, course.co_no
             FROM course, department 
             WHERE course.course_code = "${courseCode}" AND course.dept_id = department.dept_id `;
+
         let getFacultyQuery = `SELECT faculty_name, course_year
             FROM course_faculty, faculty
             WHERE course_faculty.c_code = "${courseCode}" AND faculty.faculty_id = course_faculty.course_faculty_id
-            ORDER BY course_year DESC , faculty_name ASC`
+            ORDER BY course_year DESC , faculty_name ASC`;
+
+        let getCoPoMappingQuery = `SELECT co, po, relation
+            FROM co_po_mapping
+            WHERE code = "${courseCode}"
+            ORDER BY po`;
 
         let course;
         let faculties;
+        let copoRecords = new Array();
+        let copoMatrix = [ [], [], [], [], [], [] ];
 
         db.query(getCourseDetailsQuery, (err, rows, fields) => {
             if(err) {
@@ -48,6 +56,18 @@ module.exports = {
             
         })
 
+        db.query(getCoPoMappingQuery, (err, rows, fields) => {
+            if(err) {
+                res.status(303).send(err);
+                return;
+            }
+
+            copoRecords = rows;
+            copoRecords.forEach(copo => {
+                copoMatrix[copo.co - 1].push(copo.relation);
+            })
+        })
+
         db.query(getFacultyQuery, (err, rows, fields) => {
             if(err) {
                 res.status(303).send(err);
@@ -58,7 +78,8 @@ module.exports = {
             res.render('courseDetails.ejs', {
                 title : course.course_name,
                 course : course,
-                faculties : faculties
+                faculties : faculties,
+                copoMatrix : copoMatrix
             }); 
 
         })
@@ -69,6 +90,7 @@ module.exports = {
         let getCourseDetailsQuery = `SELECT course.course_code, course.course_name, course.co_no
             FROM course 
             WHERE course.course_code = "${courseCode}"`;
+            
         db.query(getCourseDetailsQuery, (err, rows, fields) => {
             if(err) {
                 res.status(303).send(err);
@@ -91,22 +113,41 @@ module.exports = {
     },
 
     addCoPoMatrix : (req, res) => {
-        let co1 = req.body.co1;
-        let co2 = req.body.co2;
-        let co3 = req.body.co3;
-        let co4 = req.body.co4;
-        let co5 = req.body.co5;
-        let co6 = req.body.co6;
-        
-        res.json({
-            co1,
-            co2,
-            co3,
-            co4,
-            co5,
-            co6
+
+        let courseCode = req.params.coursecode;
+        let values = [
+            req.body.co1,
+            req.body.co2,
+            req.body.co3,
+            req.body.co4,
+            req.body.co5,
+            req.body.co6,
+        ];
+
+        let records = [];
+
+        for(let i = 0; i < 6; i++) {
+            for(let j = 0; j < 12; j++) {
+                if(values[i] !== null) {
+                    let row = [ courseCode, i+1, j+1, values[i][j] ];
+                    records.push(row);
+                }
+            }
+        }
+
+        let insertMappingQuery = `INSERT IGNORE INTO co_po_mapping VALUES ?`;
+
+        db.query(insertMappingQuery, [records], (err, rows, fields) => {
+            if(err) {
+                res.status(303).send(err);
+                return;
+            }
+
+            console.log('Co-Po mapping added successfully');
+            res.redirect('/admin/courses/' + courseCode);
 
         })
+
     },
 
     getCoursePage : (req, res) => {

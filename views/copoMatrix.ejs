@@ -23,39 +23,37 @@
                 <% for(let i = 1; i <= course.co_no; i++) { %>
                     <tr>
                         <th width="100px"><label for="co<%= i %>">CO<%= i %> : </label></th>
-                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
-                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
-                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
-                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
-                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
-                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
-                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
-                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
-                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
-                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
-                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
-                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" id="<%= i %>1" size="10px" min="0" max="3" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" id="<%= i %>2" size="10px" min="0" max="3" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" id="<%= i %>3" size="10px" min="0" max="3" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" id="<%= i %>4" size="10px" min="0" max="3" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" id="<%= i %>5" size="10px" min="0" max="3" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" id="<%= i %>6" size="10px" min="0" max="3" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" id="<%= i %>7" size="10px" min="0" max="3" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" id="<%= i %>8" size="10px" min="0" max="3" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" id="<%= i %>9" size="10px" min="0" max="3" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" id="<%= i %>10" size="10px" min="0" max="3" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" id="<%= i %>11" size="10px" min="0" max="3" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" id="<%= i %>12" size="10px" min="0" max="3" required></th>
                     </tr>
                 
                 <% } %>
-                <!-- <tr>
-                    <th width="100px"><label for="co1">CO1 : </label></th>
-                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
-                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
-                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
-                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
-                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
-                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
-                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
-                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
-                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
-                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
-                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
-                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
-                </tr>
-                <tr></tr> -->
             </table>
+            
             <button type="submit">Submit</button>
         </form>
     </div>
+        <!-- <script>
+            function validateInput() {
+                for(var i = 1; i <= 6; i++) {
+                    for(var j = 1; j <= 12; j++) {
+                        // console.log(i.toString() + j.toString());
+                        let x = document.getElementById(i.toString() + j.toString()).value;
+                        if(x > 3 || x < 0) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        </script> -->
 </body>

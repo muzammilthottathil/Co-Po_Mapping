@@ -28,6 +28,28 @@
         <div>
             <a href="<%= course.course_code %>/assignfaculty"><button>Assgin Faculty</button></a>
         </div>
+        <div>
+            <h3>CO-PO Matrix</h3>
+            <div>
+                <table>
+                    <tr align="centre">
+                        <th width="100px" align="center"></th>
+                        <% for(let i = 1; i <= 12; i++) { %>
+                            <th width="100px" align="center">PO<%= i %></th>
+                        <% } %>
+                    </tr>
+                    <% for(let i = 0; i < course.co_no; i++) { %>
+                        <tr>
+                            <th width="100px">CO<%= i + 1 %> : </th>
+                            <% for(let j = 0; j < 12; j++) { %>
+                                <td width="100px"><%= copoMatrix[i][j] %></td>
+                            <% } %>
+                        </tr>
+                    
+                    <% } %>
+                </table>
+            </div>
+        </div>
         <div><a href="<%= course.course_code %>/entercopomatrix"><button>Enter CO-PO Matrix</button></a></div>
     </div>
 </body>
