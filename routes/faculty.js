@@ -9,7 +9,7 @@ module.exports = {
         res.render('login.ejs', {
             title : 'Login',
             //Change begins here
-            message : null
+            message : ''
             //Change ends here
         })
     },
@@ -29,7 +29,7 @@ module.exports = {
                 res.render('login.ejs',{
                     title : 'Login',
                     //Change begins here 
-                    message : 'Incorrect Email ID or Password !!!'
+                    message : 'Invalid Email !!!'
                     //Change ends here
                 })
                 return;
@@ -59,7 +59,14 @@ module.exports = {
                         res.redirect('/faculty/' + user.faculty_id);
                     })
                 } else {
-                    res.redirect('/login');
+                    // res.redirect('/login');
+                    res.render('login.ejs',{
+                        title : 'Login',
+                        //Change begins here 
+                        message : 'Incorrect Password !!!'
+                        //Change ends here
+                    })
+                    return;
                 }
             })
         })
