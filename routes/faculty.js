@@ -75,7 +75,7 @@ module.exports = {
     getFacultyProfile : (req, res) => {
 
         let userId = req.params.id;
-        let getUserQuery = `SELECT faculty_name, faculty_email, dept_name, faculty_id
+        let getUserQuery = `SELECT faculty_name, faculty_email, dept_name, faculty_id, admin
             FROM faculty, department
             WHERE faculty_id = ? AND faculty.dept_id = department.dept_id`;
 
