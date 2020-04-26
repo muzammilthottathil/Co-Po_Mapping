@@ -7,7 +7,10 @@ require('dotenv').config();
 module.exports = {
     getLoginPage : (req, res) => {
         res.render('login.ejs', {
-            title : 'Login'
+            title : 'Login',
+            //Change begins here
+            message : null
+            //Change ends here
         })
     },
 
@@ -23,9 +26,12 @@ module.exports = {
             }
 
             if(rows.length === 0) {
-                res.status(200).json({
-                    message : "Email not found !!!"
-                });
+                res.render('login.ejs',{
+                    title : 'Login',
+                    //Change begins here 
+                    message : 'Incorrect Email ID or Password !!!'
+                    //Change ends here
+                })
                 return;
             } 
             

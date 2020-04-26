@@ -2,6 +2,12 @@
 <body>
     <h1>Faculty Login</h1>
     <div>
+        <!-- Change begins here -->
+        <% if (message) { %>
+        <label><%= message %></label>
+        <% } %>
+        <!-- Change ends here-->
+        <lable for = "error"></lable>
         <form action="/login" method="POST">
             <div>
                 <label for="email">User Name</label>
