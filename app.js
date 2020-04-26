@@ -6,8 +6,10 @@ const cors = require('cors');
 
 const { getLoginPage, loginFaculty, getFacultyProfile, logoutFaculty } = require('./routes/faculty');
 const { addAdmin, addFaculty, getFacultyAddPage, assignFaculty, getAddCoursePage, addCourse, getAssignFacultyPage } = require('./routes/admin');
-const {  getAllCourses, getCourseDetails } = require('./routes/course');
+const {  getAllCourses, getCourseDetails, getCoursePage } = require('./routes/course');
 const { verifyFaculty, ifLoggedIn, verifyAdmin } = require('./routes/middleware');
+
+const { getCoPoMatrixPage, addCoPoMatrix } = require('./routes/course');
 
 require('dotenv').config();
 
@@ -43,7 +45,12 @@ app.get('/admin/courses', verifyAdmin, getAllCourses);
 app.get('/admin/courses/:coursecode', verifyAdmin, getCourseDetails);
 
 app.get('/admin/courses/:coursecode/assignfaculty', verifyAdmin, getAssignFacultyPage);
-app.post('/admin/courses/:coursecode/assignfaculty', verifyAdmin, assignFaculty)
+app.post('/admin/courses/:coursecode/assignfaculty', verifyAdmin, assignFaculty);
+
+app.get('/admin/courses/:coursecode/entercopomatrix', getCoPoMatrixPage);
+app.post('/admin/courses/:coursecode/entercopomatrix', addCoPoMatrix);
+
+app.get('/faculty/:id/courses/:coursecode/:year', verifyFaculty, getCoursePage);
 
 
 app.post('/admin/add', addAdmin);

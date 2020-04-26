@@ -62,8 +62,17 @@ module.exports = {
     getFacultyProfile : (req, res) => {
 
         let userId = req.params.id;
-        let getUserQuery = `SELECT * FROM faculty WHERE faculty_id = ?`;
+        let getUserQuery = `SELECT faculty_name, faculty_email, dept_name, faculty_id
+            FROM faculty, department
+            WHERE faculty_id = ? AND faculty.dept_id = department.dept_id`;
 
+        let getAssignedCoursesQuery = `SELECT course_code, course_year, course_name, co_no, dept_id, semester
+            FROM course_faculty, course
+            WHERE course_faculty.course_faculty_id = ? AND course.course_code = course_faculty.c_code
+            ORDER BY course_faculty.course_year DESC, course.course_code`
+        
+        let user;
+        let courses;
         db.query(getUserQuery, [userId], (err, rows, fields) => {
             if(err) {
                 res.status(300).send(err);
@@ -76,41 +85,40 @@ module.exports = {
                 return;
             }
 
-            let user = rows[0];
-            let deptId = user.dept_id;
+            user = rows[0];
+
             
-            
-            let getDepartmentQuery = 'SELECT dept_name FROM department WHERE dept_id = ?';
-            db.query(getDepartmentQuery, [deptId], (err, rows, fields) => {
-                if(err) {
-                    res.status(300).send(err);
-                    return;
-                }
-                if(rows.length === 0) {
-                    res.send('No such department exists');
-                    return;
-                }
-                
-                let department = rows[0].dept_name;
-                // console.log(department);
+        });
 
-                if(user.admin) {
-                    res.render('adminProfile.ejs', {
-                        title : 'Profile',
-                        faculty : user,
-                        department : department
-                    });
-                } else {
-                    res.render('facultyProfile.ejs', {
-                        title : 'Profile',
-                        faculty : user,
-                        department : department
-                    });
-                }
+        db.query(getAssignedCoursesQuery, [userId], (err, rows, fields) => {
+            if(err) {
+                res.status(303).send(err);
+                return;
+            }
+
+            courses = rows;
+
+            if(user.admin) {
+                res.render('adminProfile.ejs', {
+                    title : 'Profile',
+                    faculty : user,
+                    department : user.dept_name,
+                    courses : courses
+                });
+            } else {
+                res.render('facultyProfile.ejs', {
+                    title : 'Profile',
+                    faculty : user,
+                    department : user.dept_name,
+                    courses : courses
+                });
+            }
 
 
-            })
+
         })
+
+
     },
 
     logoutFaculty : (req, res) => {

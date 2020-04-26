@@ -1,0 +1,61 @@
+<%- include('partials/header.ejs') -%>
+<body>
+    <div>
+        <h2>Enter Co-Po Matrix</h2>
+        <form action="entercopomatrix" method="POST">
+
+            <table>
+                <tr align="centre">
+                    <td width="100px" align="center"></td>
+                    <td width="100px" align="center">PO1</td>
+                    <td width="100px" align="center">PO2</td>
+                    <td width="100px" align="center">PO3</td>
+                    <td width="100px" align="center">PO4</td>
+                    <td width="100px" align="center">PO5</td>
+                    <td width="100px" align="center">PO6</td>
+                    <td width="100px" align="center">PO7</td>
+                    <td width="100px" align="center">PO8</td>
+                    <td width="100px" align="center">PO9</td>
+                    <td width="100px" align="center">PO10</td>
+                    <td width="100px" align="center">PO11</td>
+                    <td width="100px" align="center">PO12</td>
+                </tr>
+                <% for(let i = 1; i <= course.co_no; i++) { %>
+                    <tr>
+                        <th width="100px"><label for="co<%= i %>">CO<%= i %> : </label></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
+                        <th width="100px"><input type="number" name="co<%= i %>[]" size="10px" required></th>
+                    </tr>
+                
+                <% } %>
+                <!-- <tr>
+                    <th width="100px"><label for="co1">CO1 : </label></th>
+                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
+                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
+                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
+                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
+                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
+                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
+                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
+                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
+                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
+                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
+                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
+                    <th width="100px"><input type="number" name="co1[]" size="10px" required></th>
+                </tr>
+                <tr></tr> -->
+            </table>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>

@@ -10,6 +10,28 @@
         </div>
     </div>
     <div>
+        <h3>Assigned Courses</h3>
+        <div>
+            <table>
+                <tr>
+                    <th width="150px">Course Code</th>
+                    <th width="400px">Course Name</th>
+                    <th width="100px">Semester</th>
+                    <th width="150px">Year</th>
+                </tr>
+                <% courses.forEach((course) => { %>
+                    <tr>
+                        <td width="150px"><%= course.course_code %></td>
+                        <td width="400px"><%= course.course_name %></td>
+                        <td width="100px"><%= course.semester %></td>
+                        <td width="150px"><%= course.course_year %></td>
+                        <td width="150px"><a href="<%= faculty.faculty_id %>/courses/<%= course.course_code %>/<%= course.course_year %>"><button>See Detials</button></a></td>
+                    </tr>
+                <% }) %>
+            </table>
+        </div>
+    </div>
+    <div>
         <a href="/logout"><button>Log Out</button></a>
     </div>
 </body>
