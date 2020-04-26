@@ -3,9 +3,9 @@
     <h1>Faculty Login</h1>
     <div>
         <!-- Change begins here -->
-            <div>
-                <p><%= message %></p>
-            </div>
+          <div>
+            <%= message %>
+          </div>
         <!-- Change ends here-->
         <lable for = "error"></lable>
         <form action="/login" method="POST">
@@ -14,7 +14,7 @@
                 <input type="email" name="email" id="email" required >
             </div>
             <div>
-                <label for="password">password</label>
+                <label for="password">Password</label>
                 <input type="password" name="password" id="password" required >
             </div>
             <div>
