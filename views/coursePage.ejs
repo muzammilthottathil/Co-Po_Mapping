@@ -2,9 +2,39 @@
 <body>
     <div>
         <h3>Assignments</h3>
+        <div>
+            <ol>
+                <% assignments.forEach(assignment => { %>
+                    <li>
+                        <div>
+                            Assignment No. : <%= assignment.assign_no %>
+                            <a href="<%= year %>/assignments/<%= assignment.assign_no %>"><button>Details</button></a> 
+                        </div>
+                    </li>
+                <% }) %>
+            </ol>
+            
+        </div>
+        <a href="<%= year %>/addassignment/<%= noOfAssignments + 1 %>"><button>Add Assignment</button></a>
     </div>
     <div>
         <h3>Internal Exams</h3>
+        <div>
+            <ol>
+                <li>
+                    <div>
+                        <p>Internal Exam 1</p>
+                        <a href=""><button>Details</button></a>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <p>Internal Exam 2</p>
+                        <a href=""><button>Details</button></a>
+                    </div>
+                </li>
+            </ol>
+        </div>
     </div>
     <div>
         <h3>End Semester Exam</h3>

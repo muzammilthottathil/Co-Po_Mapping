@@ -1,0 +1,43 @@
+<%- include('partials/header.ejs') %>
+<body>
+    <div>
+        <h1>Add Assignment</h1>
+        <div>
+            <ul>
+                <li>Course Code : <%= course.course_code %> </li>
+                <li>Coures Name : <%= course.course_name %></li>
+                <li>Semester : <%= course.semester %></li>
+                <li>Course Year : <%= courseYear %></li>
+            </ul>
+        </div>
+        <div>
+            <form action="<%= assignmentNo %>" method="POST">
+                <div>
+                    <label><h3>Assignment No. : <%= assignmentNo %></h3></label>
+                </div>
+                <div>
+                    <label><h6>Enter total marks for each CO</h6></label>
+                </div>
+                <div>
+                    <table>
+                        <tr>
+                            <% for(let i = 1; i <= course.co_no; i++) { %>
+                                <th width="150px">CO<%= i %></th>
+                            <% } %>
+                        </tr>
+                        <tr>
+                            <% for(let i = 1; i <= course.co_no; i++) { %>
+                                <td width="150px"><input type="number" name="cototals[]" id="<%= i %>" required></td>
+                            <% } %>
+                        </tr>
+                    </table>
+                </div>
+                
+
+                
+                <button type="submit">Add Assignment</button>
+            </form>
+            
+        </div>
+    </div>
+</body>

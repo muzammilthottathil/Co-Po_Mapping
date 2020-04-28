@@ -4,16 +4,14 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
+const { getHomePage } = require('./routes/index');
 const { getLoginPage, loginFaculty, getFacultyProfile, logoutFaculty } = require('./routes/faculty');
 const { addAdmin, addFaculty, getFacultyAddPage, assignFaculty, getAddCoursePage, addCourse, getAssignFacultyPage } = require('./routes/admin');
-const {  getAllCourses, getCourseDetails, getCoursePage } = require('./routes/course');
+const { getAllCourses, getCourseDetails, getCoursePage, getAddAssignmentPage, addAssignment } = require('./routes/course');
 const { verifyFaculty, ifLoggedIn, verifyAdmin } = require('./routes/middleware');
-
 const { getCoPoMatrixPage, addCoPoMatrix } = require('./routes/course');
+const { getAssignmentDetails } = require('./routes/assignment');
 
-require('dotenv').config();
-
-const { getHomePage } = require('./routes/index');
 
 require('dotenv').config();
 
@@ -52,10 +50,15 @@ app.post('/admin/courses/:coursecode/entercopomatrix', addCoPoMatrix);
 
 app.get('/faculty/:id/courses/:coursecode/:year', verifyFaculty, getCoursePage);
 
+app.get('/faculty/:id/courses/:coursecode/:year/addassignment/:assignmentno', getAddAssignmentPage);
+app.post('/faculty/:id/courses/:coursecode/:year/addassignment/:assignmentno', addAssignment);
+
+app.get('/faculty/:id/courses/:coursecode/:year/assignments/:assignmentno', getAssignmentDetails);
+
 
 app.post('/admin/add', addAdmin);
 
-app.get('/logout', logoutFaculty);
+app.get('/logout', logoutFaculty);  
 
 app.listen(process.env.PORT, (err) => {
     if(!err) {
