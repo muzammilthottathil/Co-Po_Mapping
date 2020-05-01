@@ -50,8 +50,8 @@ app.post('/admin/courses/:coursecode/entercopomatrix', addCoPoMatrix);
 
 app.get('/faculty/:id/courses/:coursecode/:year', verifyFaculty, getCoursePage);
 
-app.get('/faculty/:id/courses/:coursecode/:year/addassignment/:assignmentno', getAddAssignmentPage);
-app.post('/faculty/:id/courses/:coursecode/:year/addassignment/:assignmentno', addAssignment);
+app.get('/faculty/:id/courses/:coursecode/:year/addassignment/:assignmentno', verifyFaculty, getAddAssignmentPage);
+app.post('/faculty/:id/courses/:coursecode/:year/addassignment/:assignmentno', verifyFaculty, addAssignment);
 
 app.get('/faculty/:id/courses/:coursecode/:year/assignments/:assignmentno', getAssignmentDetails);
 

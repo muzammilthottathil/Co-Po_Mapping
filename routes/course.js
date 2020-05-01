@@ -119,38 +119,54 @@ module.exports = {
             req.body.co3,
             req.body.co4,
             req.body.co5,
-            req.body.co6,
         ];
 
-        let records = [];
+        let getCourseCoNo = `SELECT co_no
+            FROM course
+            WHERE course_code = "${courseCode}"`;
 
-        for(let i = 0; i < 6; i++) {
-            for(let j = 0; j < 12; j++) {
-                if(values[i] !== null) {
-                    let row = [ courseCode, i+1, j+1, values[i][j] ];
-                    records.push(row);
-                }
-            }
-        }
-
-        let insertMappingQuery = `INSERT IGNORE INTO co_po_mapping VALUES ?`;
-
-        db.query(insertMappingQuery, [records], (err, rows, fields) => {
+        db.query(getCourseCoNo, (err, rows, fields) => {
             if(err) {
                 res.status(303).send(err);
                 return;
             }
 
-            console.log('Co-Po mapping added successfully');
-            res.redirect('/admin/courses/' + courseCode);
+            let coNo = rows[0].co_no;
+            if(coNo === 6) {
+                values.push(req.body.co6);
+            }
 
+            // console.log(coNo);
+            let records = [];
+
+            for(let i = 0; i < coNo; i++) {
+                for(let j = 0; j < 12; j++) {
+                    if(values[i] !== null) {
+                        let row = [ courseCode, i+1, j+1, values[i][j] ];
+                        records.push(row);
+                    }
+                }
+            }
+
+            // console.log(records);
+
+            let insertMappingQuery = `INSERT IGNORE INTO co_po_mapping VALUES ?`;
+
+            db.query(insertMappingQuery, [records], (err, rows, fields) => {
+                if(err) {
+                    console.log("Error occured here");
+                    res.status(303).send(err);
+                    return;
+                }
+
+                console.log('Co-Po mapping added successfully');
+                res.redirect('/admin/courses/' + courseCode);
+
+            })
         })
-
     },
 
     getCoursePage : (req, res) => {
-
-        // console.log(req.params);
 
         let courseCode = req.params.coursecode;
         let courseYear = req.params.year;
@@ -169,7 +185,6 @@ module.exports = {
                 return;
             }
 
-            // console.log(rows);
             assignments = rows;
 
             let noOfAssignments = rows.length;
@@ -185,6 +200,7 @@ module.exports = {
     },
 
     getAddAssignmentPage : (req, res) => {
+
         let courseCode = req.params.coursecode;
         let courseYear = req.params.year;
         let assignmentNo = req.params.assignmentno;

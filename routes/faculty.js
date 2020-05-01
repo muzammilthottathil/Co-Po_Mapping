@@ -55,7 +55,7 @@ module.exports = {
                             httpOnly: true,
                         })
                         
-                        console.log('login succesful');
+                        // console.log('login succesful');
                         res.redirect('/faculty/' + user.faculty_id);
                     })
                 } else {
@@ -93,7 +93,7 @@ module.exports = {
             }
             if(rows.length === 0) {
                 res.json({
-                    message : 'No such user fount'
+                    message : 'No such user found'
                 });
                 return;
             }
@@ -127,8 +127,6 @@ module.exports = {
                 });
             }
 
-
-
         })
 
 
@@ -138,7 +136,7 @@ module.exports = {
 
         res.cookie('token', null, {
             expires: new Date(Date.now() + 1),
-            secure: false, // set to true if your using https
+            secure: false, 
             httpOnly: true,
         })
         res.redirect('/login');
