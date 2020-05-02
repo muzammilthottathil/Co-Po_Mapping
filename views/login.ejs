@@ -5,10 +5,18 @@
             <h5>Faculty Login</h5>
         </div>
         <div>
+            <br>
+        </div>
+        <div>
             <!-- Change begins here -->
-            <div>
-                <p><%= message %></p>
+            <% if(message != ''){ %>
+            <div class = "alert alert-warning alert-dismissible" role="alert" >
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Warning! &nbsp;&nbsp;</strong><%= message %>
             </div>
+            <% } %>
             <!-- Change ends here-->
             <br>
             <form action="/login" method="POST">
